@@ -62,7 +62,7 @@ public class MypathResource
         //Already a check is made in the UI to alert the user. 
     	//Another round of check is made to check if empty field is being sent from the server side.
     	//Range or patter validation happens only at the UI part
-        if(areaCode.length() > 0 && telnum.length() > 0 && description.length() >0 && customername.length() > 0 && meansOfContact.length() > 0
+        if(areaCode.length() > 0 && telnum.length() > 0 && description.trim().length() >0 && customername.length() > 0 && meansOfContact.length() > 0
                 && emailid.length() > 0 && createdBy.length() > 0 && assignee.length() > 0 && status.length() > 0 && areaOfComplaint.length()>0)
         {
            

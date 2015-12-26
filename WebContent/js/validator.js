@@ -135,6 +135,8 @@ function CreateTicketList() {
 function selfToggle() {
 	$("#form_holder_create_ticket").fadeIn(0);
 	$("#ticketing_form")[0].reset();
+	$("#ticketid").html('');
+	$("#hidticketid").html('');
 	$("#form_holder_view_tickets").fadeOut(0);
 	$("#action_buttons_edit").fadeOut(0);
 	$("#action_buttons_new").fadeIn(0);
@@ -205,13 +207,13 @@ function checkEmail() {
 }
 
 function validateCustomerName() {
-	var nameRegex = /^[a-zA-Z]+$/;
+	var nameRegex = /^[a-z A-Z]+$/;
 	var validUsername = document.getElementById('customername');
 	var valid = true;
 	if (validUsername == null) {
 		valid = false
 	} else {
-		if (nameRegex.test(validUsername.value)) {
+		if (nameRegex.test(validUsername.value.trim())) {
 			valid = true;
 			$('#name-alert').html('');
 			return true;
