@@ -52,7 +52,8 @@ function validateAccessCode(e) {
 // This function is used to clear all the mandatory fields associated warning
 // from the page during form reset
 function clearWarnings() {
-	$('#desc-alert').html('');
+	$('#desc-alert').html('');	
+	$('#ac-alert').html('');
 	$('#assignee-alert').html('');
 	$('#comment-alert').html('');
 	$('#name-alert').html('');
