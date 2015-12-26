@@ -175,7 +175,7 @@ function loadEditForm(ticketId) {
 			$("#form_holder_create_ticket").fadeIn(0);
 			$("#action_buttons_edit").fadeIn(0);
 			$("#action_buttons_new").fadeOut(0);
-			loadSubList(vale, finalValue);
+			loadSubListWithParams(vale, finalValue);
 		}
 	});
 }

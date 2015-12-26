@@ -300,6 +300,7 @@ public class MypathResource
         {
             convertList = ServiceEngineersKb.getNewProductEnquiryStaffs();
         }
+        sendString += "<option value=\"None\">--Select--</option>";
         if(convertList != null)
         {
             for (int optionIterator = 0; optionIterator < convertList.size(); optionIterator++) {
