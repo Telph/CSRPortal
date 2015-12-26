@@ -134,6 +134,7 @@ function CreateTicketList() {
 // This is a utility method used to hide/unhide specific forms within the page
 function selfToggle() {
 	$("#form_holder_create_ticket").fadeIn(0);
+	clearWarnings();
 	$("#ticketing_form")[0].reset();
 	$("#ticketid").html('');
 	$("#hidticketid").html('');
