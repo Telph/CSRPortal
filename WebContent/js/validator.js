@@ -179,29 +179,7 @@ function loadEditForm(ticketId) {
 		}
 	});
 }
-// Based on Area Of Complaint type, Assignee has to loaded automatically
-function loadSubList() {
-	$.ajax({
-		url : 'rest/portal/getAssigneeList',
-		type : 'GET',
-		data : 'type=' + $("#complainttype").val(),
-		success : function(data) {
-			$("#assignee").html(data);
-		}
-	});
-}
-// Based on Area Of Complaint type, Assignee has to loaded automatically
-function loadSubList(vale, finalvalue) {
-	$.ajax({
-		url : 'rest/portal/getAssigneeList',
-		type : 'GET',
-		data : 'type=' + vale,
-		success : function(data) {
-			$("#assignee").html(data);
-			$("#assignee").val(finalvalue);
-		}
-	});
-}
+
 // List of tickets can be saved to the local machine if required
 function saveAsExcel() {
 	$('#ticket_details_table').tableExport({

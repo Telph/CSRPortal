@@ -19,6 +19,29 @@
     <script src="js/bootstrap.min.js"></script>
    	<script src="js/validator.js"></script>    
     <script>
+	 // Based on Area Of Complaint type, Assignee has to loaded automatically
+	    function loadSubList() {
+	    	$.ajax({
+	    		url : 'rest/portal/getAssigneeList',
+	    		type : 'GET',
+	    		data : 'type=' + $("#complainttype").val(),
+	    		success : function(data) {
+	    			$("#assignee").html(data);
+	    		}
+	    	});
+	    }
+	 // Based on Area Of Complaint type, Assignee has to loaded automatically
+	    function loadSubList(vale, finalvalue) {
+	    	$.ajax({
+	    		url : 'rest/portal/getAssigneeList',
+	    		type : 'GET',
+	    		data : 'type=' + vale,
+	    		success : function(data) {
+	    			$("#assignee").html(data);
+	    			$("#assignee").val(finalvalue);
+	    		}
+	    	});
+	    }
 		$(document).ready(function(){
 		   $("#myModal").modal({backdrop: "static"});		   
 		});
@@ -132,7 +155,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="feedback" class="col-sm-2 control-label">Complaint Type*</label>
+                        <label for="complainttype" class="col-sm-2 control-label">Complaint Type*</label>
                         <div class="col-sm-3">
                             <select class="form-control" id="complainttype" name="complainttype" onchange="loadSubList();">
                                 <option value="Hardware">Hardware Issue</option>
