@@ -141,7 +141,7 @@ public class MypathResource
                 htmlCode.append("<tr>");
                 if(!tickets.get(key).getStatus().equals("Closed"))
                 {
-                    htmlCode.append("<td><a style=\"cursor:pointer\" onClick=\"event.preventDefault();loadEditForm('"+tickets.get(key).getTicketId()+"');return false;\">" + tickets.get(key).getTicketId() + "</a></td>");
+                    htmlCode.append("<td><a style=\"cursor:pointer\" onClick=\"event.preventDefault();loadEditForm('"+tickets.get(key).getTicketId()+"');clearWarnings();return false;\">" + tickets.get(key).getTicketId() + "</a></td>");
                 }
                 else
                 {
