@@ -94,7 +94,14 @@ public class MypathResource
             ticket.setAreaOfComplaint(areaOfComplaint);
             ticket.setAssignedDate(dateFormat.format(date));
             ticket.setLastUpdated("-");
-            ticket.setClosedOn("-");
+            if(status.equals("Closed"))
+            {
+            	ticket.setClosedOn(dateFormat.format(date));
+            }
+            else
+            {
+            	ticket.setClosedOn("-");
+            }
             TicketKb.getInstance().addTicket(ticket);
             return "Ticket No " + ticket.getTicketId() + " has been added successfully";
         }
@@ -122,7 +129,7 @@ public class MypathResource
         htmlCode.append("<td>Customer Name</td>");
         htmlCode.append("<td>Created By</td>");    
         htmlCode.append("<td>Assigned To</td>");    
-        htmlCode.append("<td>Assigned On</td>");    
+        htmlCode.append("<td>Created On</td>");    
         htmlCode.append("<td>Last Updated</td>");         
         htmlCode.append("<td>Status</td>"); 
         htmlCode.append("<td>Comment</td>");
