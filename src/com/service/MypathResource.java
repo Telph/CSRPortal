@@ -52,6 +52,7 @@ public class MypathResource
         @DefaultValue("") @FormParam("emailid") String emailid,           
         @DefaultValue("No") @FormParam("shallcontact") String shallContact,
         @DefaultValue("") @FormParam("meansofcontact") String meansOfContact,
+        @DefaultValue("") @FormParam("complainttype") String areaOfComplaint,
         @DefaultValue("") @FormParam("comment") String comment,
         @DefaultValue("") @FormParam("description") String description,
         @DefaultValue("") @FormParam("createdby") String createdBy,
@@ -62,7 +63,7 @@ public class MypathResource
     	//Another round of check is made to check if empty field is being sent from the server side.
     	//Range or patter validation happens only at the UI part
         if(areaCode.length() > 0 && telnum.length() > 0 && description.length() >0 && customername.length() > 0 && meansOfContact.length() > 0
-                && emailid.length() > 0 && createdBy.length() > 0 && assignee.length() > 0 && status.length() > 0)
+                && emailid.length() > 0 && createdBy.length() > 0 && assignee.length() > 0 && status.length() > 0 && areaOfComplaint.length()>0)
         {
            
            if((status.equals("Closed")||status.equals("Open")))
@@ -89,7 +90,8 @@ public class MypathResource
             ticket.setDescription(description);
             ticket.setAssignedBy(createdBy);
             ticket.setAssignee(assignee);
-            ticket.setStatus(status);                        
+            ticket.setStatus(status);   
+            ticket.setAreaOfComplaint(areaOfComplaint);
             ticket.setAssignedDate(dateFormat.format(date));
             ticket.setLastUpdated("-");
             ticket.setClosedOn("-");
@@ -115,20 +117,23 @@ public class MypathResource
         HashMap<String, Ticket> tickets = TicketKb.getInstance().getTickets();
         htmlCode.append("<div class=\"table-responsive col-lg-12\" ><table border=\"1\" id=\"ticket_details_table\" class=\"table table-striped\" style=\"font-size: 11px;\">");
         htmlCode.append("<td>Ticket Id</td>");
+        htmlCode.append("<td>Area Of Complaint</td>");
         htmlCode.append("<td>Description</td>");
         htmlCode.append("<td>Customer Name</td>");
-        htmlCode.append("<td>Area Code</td>");
-        htmlCode.append("<td>Contact</td>");
-        htmlCode.append("<td>Email Id</td>");
-        htmlCode.append("<td>Shall contact</td>");
-        htmlCode.append("<td>Means of contact</td>");    
         htmlCode.append("<td>Created By</td>");    
         htmlCode.append("<td>Assigned To</td>");    
         htmlCode.append("<td>Assigned On</td>");    
         htmlCode.append("<td>Last Updated</td>");         
         htmlCode.append("<td>Status</td>"); 
         htmlCode.append("<td>Comment</td>");
-        htmlCode.append("<td>Closed on</td>"); 
+        htmlCode.append("<td>Closed on</td>");
+        htmlCode.append("<td>Shall contact</td>");
+        htmlCode.append("<td>Means of contact</td>"); 
+        htmlCode.append("<td>Area Code</td>");
+        htmlCode.append("<td>Contact</td>");
+        htmlCode.append("<td>Email Id</td>");
+       
+        
         Iterator<String> keys = tickets.keySet().iterator();
         while(keys.hasNext())
         {
@@ -136,26 +141,29 @@ public class MypathResource
                 htmlCode.append("<tr>");
                 if(!tickets.get(key).getStatus().equals("Closed"))
                 {
-                    htmlCode.append("<td><a style=\"cursor:pointer\" onClick=\"loadEditForm('"+tickets.get(key).getTicketId()+"')\">" + tickets.get(key).getTicketId() + "</a></td>");
+                    htmlCode.append("<td><a style=\"cursor:pointer\" onClick=\"event.preventDefault();loadEditForm('"+tickets.get(key).getTicketId()+"');return false;\">" + tickets.get(key).getTicketId() + "</a></td>");
                 }
                 else
                 {
                     htmlCode.append("<td><a href=\"#\" style=\"cursor:not-allowed\">" + tickets.get(key).getTicketId() + "</a></td>");
                 }
+                htmlCode.append("<td>" + tickets.get(key).getAreaOfComplaint() + "</td>");
                 htmlCode.append("<td>" + tickets.get(key).getDescription() + "</td>");
                 htmlCode.append("<td>" + tickets.get(key).getCustomerName() + "</td>");
-                htmlCode.append("<td>" + tickets.get(key).getContactTelAreaCode() + "</td>");
-                htmlCode.append("<td>" + tickets.get(key).getContactNumber() + "</td>");                
-                htmlCode.append("<td>" + tickets.get(key).getEmailId() + "</td>");
-                htmlCode.append("<td>" + tickets.get(key).getShallContact() + "</td>");
-                htmlCode.append("<td>" + tickets.get(key).getContactSource() + "</td>");    
+                
                 htmlCode.append("<td>" + tickets.get(key).getCreatorName() + "</td>");    
                 htmlCode.append("<td>" + tickets.get(key).getAssignee() + "</td>");    
                 htmlCode.append("<td>" + tickets.get(key).getAssignedDate() + "</td>");    
                 htmlCode.append("<td>" + tickets.get(key).getLastUpdated() + "</td>");    
                 htmlCode.append("<td>" + tickets.get(key).getStatus() + "</td>"); 
-                 htmlCode.append("<td>" + tickets.get(key).getComment() + "</td>");
-                htmlCode.append("<td>" + tickets.get(key).getClosedOn() + "</td>");    
+                htmlCode.append("<td>" + tickets.get(key).getComment() + "</td>");
+                htmlCode.append("<td>" + tickets.get(key).getClosedOn() + "</td>");  
+                
+                htmlCode.append("<td>" + tickets.get(key).getShallContact() + "</td>");                
+                htmlCode.append("<td>" + tickets.get(key).getContactSource() + "</td>");                
+                htmlCode.append("<td>" + tickets.get(key).getContactTelAreaCode() + "</td>");
+                htmlCode.append("<td>" + tickets.get(key).getContactNumber() + "</td>");
+                htmlCode.append("<td>" + tickets.get(key).getEmailId() + "</td>");
                 htmlCode.append("</tr>");
         }
         htmlCode.append("</table></div><div><a href=\"#\" "
@@ -185,7 +193,7 @@ public class MypathResource
         returnString.append("&comment="+ticket.getComment());
         returnString.append("&shallcontact="+ticket.getShallContact());
         returnString.append("&meansofcontact="+ticket.getContactSource());
-        returnString.append("&createdby=" + ticket.getCreatorName());
+        returnString.append("&complainttype="+ ticket.getAreaOfComplaint()+ "&createdby=" + ticket.getCreatorName());
         returnString.append("&assignee=" + ticket.getAssignee());
         returnString.append("&status="+ticket.getStatus());        
         returnString.append("&description="+ticket.getDescription());
@@ -208,6 +216,7 @@ public class MypathResource
         @DefaultValue("") @FormParam("emailid") String emailid,           
         @DefaultValue("No") @FormParam("shallcontact") String shallContact,
         @DefaultValue("") @FormParam("meansofcontact") String meansOfContact,
+        @DefaultValue("") @FormParam("complainttype") String areaOfComplaint,
         @DefaultValue("") @FormParam("comment") String comment,
         @DefaultValue("") @FormParam("description") String description,
         @DefaultValue("") @FormParam("createdby") String createdBy,
@@ -247,6 +256,7 @@ public class MypathResource
                 ticket.setAssignee(assignee);
                 ticket.setStatus(status);                        
                 ticket.setLastUpdated(dateFormat.format(date));
+                ticket.setAreaOfComplaint(areaOfComplaint);
                 if(status.equals("Closed"))
                 {
                     ticket.setClosedOn(dateFormat.format(date));
@@ -290,7 +300,6 @@ public class MypathResource
         {
             convertList = ServiceEngineersKb.getNewProductEnquiryStaffs();
         }
-        sendString += "<option value=\"None\">--select--</option>";
         if(convertList != null)
         {
             for (int optionIterator = 0; optionIterator < convertList.size(); optionIterator++) {
@@ -312,7 +321,7 @@ public class MypathResource
         {
         	return "valid";
         }
-        return "invalid"+accesscode+".";
+        return "invalid";
     }
         
 }

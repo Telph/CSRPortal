@@ -19,6 +19,7 @@ public class Ticket {
     private String emailId;
     private String shallContact;
     private String contactSource;
+    private String areaOfComplaint;
     private String description;
     private String comment;
     private String assignedBy;
@@ -159,6 +160,12 @@ public class Ticket {
     {
         this.status = status;
     }
-    
+    public String getAreaOfComplaint() {
+		return areaOfComplaint;
+	}
+
+	public void setAreaOfComplaint(String areaOfComplaint) {
+		this.areaOfComplaint = areaOfComplaint;
+	}    
             
 }

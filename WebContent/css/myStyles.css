@@ -74,12 +74,11 @@ textarea {
     resize: none;
 }
 
-.modal-header, h4, .close {
+.modal-header, h6, .close {
       background-color: #303F9F;
       color:white !important;
       text-align: center;
       font-size: 30px;
-      width : 100px;
   }
   .modal-footer {
       background-color: #f9f9f9;
